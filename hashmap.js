@@ -23,12 +23,13 @@ class HashMap {
     set(key, value) {
         const index = this.hash(key);
         let node = this.buckets[index];
-        if(node && node.size() > 0){
+        if(node && node.getHead()){
             const entry = node.findEntry({ key });
             if(entry) entry.setValue({ key, value });
+            else node.append({ key, value });
             return;
         }
-        else if(node) node.append({ key, value });
+        node.append({ key, value });
     }
 
     get(key) {
