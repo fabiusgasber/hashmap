@@ -60,3 +60,8 @@ class HashMap {
         }
         return false;
     }
+
+    clear() {
+        this.buckets.fill(null)
+    }
+}
