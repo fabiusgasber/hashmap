@@ -66,4 +66,17 @@ class HashMap {
     clear() {
         this.buckets = Array.from({ length: this.capacity }, () => LinkedList());
     }
+
+    keys() {
+        const keys = [];
+        for(let i = 0; i < this.buckets.length; i++){
+            const list = this.buckets[i];
+            let curr = list.getHead();
+            while(curr) {
+                keys.push(curr.getValue().key);
+                curr = curr.getNext();
+            }
+        }
+        return keys;
+    }
 }
