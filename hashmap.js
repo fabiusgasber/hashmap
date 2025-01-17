@@ -92,5 +92,17 @@ class HashMap {
         }
         return values;
     }
-}
 
+    entries() {
+        const values = [];
+        for(let i = 0; i < this.buckets.length; i++){
+            const list = this.buckets[i];
+            let curr = list.getHead();
+            while(curr) {
+                values.push([curr.getValue().key, curr.getValue().value]);
+                curr = curr.getNext();
+            }
+        }
+        return values;
+    }
+}
