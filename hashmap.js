@@ -19,3 +19,21 @@ class HashMap {
      
         return hashCode;
     }
+
+    set(key, value) {
+        const index = this.hash(key);
+        let node = this.buckets[index];
+        if(node && node.findEntry({ key })){
+            const entry = node.findEntry({ key });
+            entry.setValue({ key, value });
+        }
+        else if(node && !(node.findEntry({ key }))){
+            node.append({ key, value });
+        }
+        else {
+            const list = LinkedList();
+            list.prepend({ key, value });
+            this.buckets[index] = list;
+        }
+    }
+
