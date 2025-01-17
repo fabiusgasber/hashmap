@@ -56,6 +56,14 @@ class HashMap {
         return false;
     }
 
+    length() {
+        let length = 0;
+        for(let i = 0; i < this.buckets.length; i++){
+            length += this.buckets[i].size();
+        }
+        return length;
+    }
+
     clear() {
         this.buckets.fill(LinkedList())
     }
