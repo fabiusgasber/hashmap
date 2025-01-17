@@ -30,11 +30,6 @@ class HashMap {
         else if(node && !(node.findEntry({ key }))){
             node.append({ key, value });
         }
-        else {
-            const list = LinkedList();
-            list.prepend({ key, value });
-            this.buckets[index] = list;
-        }
     }
 
     get(key) {
