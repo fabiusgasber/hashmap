@@ -37,3 +37,10 @@ class HashMap {
         }
     }
 
+    get(key) {
+        const index = this.hash(key);
+        const node = this.buckets[index];
+        const entry = node?.findEntry({ key })
+        return node && entry ? entry.getValue().value : null;
+    }
+
