@@ -49,3 +49,14 @@ class HashMap {
         const node = this.buckets[index];
         return !!node?.findEntry({ key });
     }
+
+    remove(key) {
+        const index = this.hash(key);
+        const list = this.buckets[index];
+        const entry = list?.findEntry({ key })
+        if(list && entry) {
+            list.removeAt(list.find(entry));
+            return true;
+        }
+        return false;
+    }
