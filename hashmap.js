@@ -5,7 +5,7 @@ class HashMap {
     loadFactor = 0.75;
 
     constructor(capacity = 16){
-        this.buckets = new Array(capacity).fill(null);
+        this.buckets = new Array(capacity).fill(LinkedList());
         this.capacity = this.buckets.length;
     }
 
@@ -62,6 +62,6 @@ class HashMap {
     }
 
     clear() {
-        this.buckets.fill(null)
+        this.buckets.fill(LinkedList())
     }
 }
