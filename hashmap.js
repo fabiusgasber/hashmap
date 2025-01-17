@@ -79,4 +79,18 @@ class HashMap {
         }
         return keys;
     }
+
+    values() {
+        const values = [];
+        for(let i = 0; i < this.buckets.length; i++){
+            const list = this.buckets[i];
+            let curr = list.getHead();
+            while(curr) {
+                values.push(curr.getValue().value);
+                curr = curr.getNext();
+            }
+        }
+        return values;
+    }
 }
+
