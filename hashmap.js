@@ -5,7 +5,7 @@ class HashMap {
     loadFactor = 0.75;
 
     constructor(capacity = 16){
-        this.buckets = new Array(capacity).fill(LinkedList());
+        this.buckets = Array.from({ length: capacity }, () => LinkedList());
         this.capacity = this.buckets.length;
     }
 
@@ -23,13 +23,12 @@ class HashMap {
     set(key, value) {
         const index = this.hash(key);
         let node = this.buckets[index];
-        if(node && node.findEntry({ key })){
+        if(node && node.size() > 0){
             const entry = node.findEntry({ key });
-            entry.setValue({ key, value });
+            if(entry) entry.setValue({ key, value });
+            return;
         }
-        else if(node && !(node.findEntry({ key }))){
-            node.append({ key, value });
-        }
+        else if(node) node.append({ key, value });
     }
 
     get(key) {
@@ -65,6 +64,6 @@ class HashMap {
     }
 
     clear() {
-        this.buckets.fill(LinkedList())
+        this.buckets = Array.from({ length: this.capacity }, () => LinkedList());
     }
 }
