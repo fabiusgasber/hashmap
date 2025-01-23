@@ -21,14 +21,16 @@ export class HashMap {
     }
 
     set(key, value) {
-        if(this.length() >= this.loadFactor * this.capacity) {
-            this.grow();
-        }
         let node = this.getNode(this.buckets, key);
         if(node) {
             const entry = node.findEntry({ key });
-            entry ? entry.setValue({ key, value }) : node.append({ key, value });
+            if(entry) {
+                entry.setValue({ key, value })
+                return;
+            }
+            else node.append({ key, value });
         }
+        if(this.length() > this.loadFactor * this.capacity) this.grow();
     }
 
     get(key) {
