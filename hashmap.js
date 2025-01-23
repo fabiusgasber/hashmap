@@ -87,42 +87,28 @@ export class HashMap {
         this.buckets = Array.from({ length: this.capacity }, () => LinkedList());
     }
 
-    keys() {
+    extract(data) {
         const keys = [];
         for(let i = 0; i < this.buckets.length; i++){
             const list = this.buckets[i];
             let curr = list.getHead();
             while(curr) {
-                keys.push(curr.getValue().key);
+                keys.push(data === "entries" ? [curr.getValue().key, curr.getValue().value] : curr.getValue()[data]);
                 curr = curr.getNext();
             }
         }
         return keys;
     }
 
+    keys() {
+        return this.extract("key");
+    }
+
     values() {
-        const values = [];
-        for(let i = 0; i < this.buckets.length; i++){
-            const list = this.buckets[i];
-            let curr = list.getHead();
-            while(curr) {
-                values.push(curr.getValue().value);
-                curr = curr.getNext();
-            }
-        }
-        return values;
+        return this.extract("value");
     }
 
     entries() {
-        const values = [];
-        for(let i = 0; i < this.buckets.length; i++){
-            const list = this.buckets[i];
-            let curr = list.getHead();
-            while(curr) {
-                values.push([curr.getValue().key, curr.getValue().value]);
-                curr = curr.getNext();
-            }
-        }
-        return values;
+        return this.extract("entries");
     }
 }
