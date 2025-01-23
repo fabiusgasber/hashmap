@@ -26,13 +26,10 @@ export class HashMap {
         }
         const index = this.hash(key);
         let node = this.buckets[index];
-        if(node && node.getHead()){
+        if(node) {
             const entry = node.findEntry({ key });
-            if(entry) entry.setValue({ key, value });
-            else node.append({ key, value });
-            return;
+            entry ? entry.setValue({ key, value }) : node.append({ key, value });
         }
-        node.append({ key, value });
     }
 
     get(key) {
