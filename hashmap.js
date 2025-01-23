@@ -24,8 +24,7 @@ export class HashMap {
         if(this.length() >= this.loadFactor * this.capacity) {
             this.grow();
         }
-        const index = this.hash(key);
-        let node = this.buckets[index];
+        let node = this.getNode(this.buckets, key);
         if(node) {
             const entry = node.findEntry({ key });
             entry ? entry.setValue({ key, value }) : node.append({ key, value });
