@@ -40,10 +40,13 @@ export class HashMap {
     }
 
     has(key) {
-        const index = this.hash(key);
-        const node = this.buckets[index];
+        const node = this.getNode(this.buckets, key);
         return !!node?.findEntry({ key });
     }
+
+    getNode(arr, key) {
+        return arr[this.hash(key)];
+    } 
 
     grow() {
         const expandingArr = Array.from({length: this.capacity * 2}, () => LinkedList());
@@ -52,8 +55,7 @@ export class HashMap {
         for(let entry of entries){
             const key = entry[0];
             const value = entry[1];
-            const index = this.hash(key);
-            const node = expandingArr[index];
+            const node = this.getNode(expandingArr, key);
             node.append({ key, value });
         }
         this.buckets = expandingArr;
