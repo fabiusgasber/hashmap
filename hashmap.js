@@ -22,17 +22,7 @@ export class HashMap {
 
     set(key, value) {
         if(this.length() >= this.loadFactor * this.capacity) {
-            const expandingArr = Array.from({length: this.capacity * 2}, () => LinkedList());
-            this.capacity = expandingArr.length;
-            const entries = this.entries();
-            for(let entry of entries){
-                const key = entry[0];
-                const value = entry[1];
-                const index = this.hash(key);
-                const node = expandingArr[index];
-                node.append({ key, value });
-            }
-            this.buckets = expandingArr;
+            this.grow();
         }
         const index = this.hash(key);
         let node = this.buckets[index];
@@ -56,6 +46,20 @@ export class HashMap {
         const index = this.hash(key);
         const node = this.buckets[index];
         return !!node?.findEntry({ key });
+    }
+
+    grow() {
+        const expandingArr = Array.from({length: this.capacity * 2}, () => LinkedList());
+        this.capacity = expandingArr.length;
+        const entries = this.entries();
+        for(let entry of entries){
+            const key = entry[0];
+            const value = entry[1];
+            const index = this.hash(key);
+            const node = expandingArr[index];
+            node.append({ key, value });
+        }
+        this.buckets = expandingArr;
     }
 
     remove(key) {
