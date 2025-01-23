@@ -1,6 +1,6 @@
 import { LinkedList } from "./linkedlist.js";
 
-class HashMap {
+export class HashMap {
 
     loadFactor = 0.75;
 
@@ -21,6 +21,19 @@ class HashMap {
     }
 
     set(key, value) {
+        if(this.length() >= this.loadFactor * this.capacity) {
+            const expandingArr = Array.from({length: this.capacity * 2}, () => LinkedList());
+            this.capacity = expandingArr.length;
+            const entries = this.entries();
+            for(let entry of entries){
+                const key = entry[0];
+                const value = entry[1];
+                const index = this.hash(key);
+                const node = expandingArr[index];
+                node.append({ key, value });
+            }
+            this.buckets = expandingArr;
+        }
         const index = this.hash(key);
         let node = this.buckets[index];
         if(node && node.getHead()){
